@@ -1,0 +1,135 @@
+﻿<Page x:Class="MarketplaceWPF.AdminPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Background="{StaticResource BackgroundBrush}">
+    <Grid Margin="30">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Панель администратора" FontSize="24" FontWeight="Bold" 
+                   Grid.Row="0" Margin="0,20,0,20"/>
+
+        <!-- выдача заказов -->
+        <Border Grid.Row="1" Background="White" CornerRadius="8" Padding="20" Margin="0,0,0,20">
+            <StackPanel>
+                <TextBlock Text="Выдача заказов" FontSize="18" FontWeight="SemiBold" Margin="0,0,0,15"/>
+                <TextBlock Text="Введите код заказа (или отсканируйте QR):" Margin="0,0,0,5"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBox x:Name="TxtOrderCode" Grid.Column="0" Margin="0,0,10,0"
+                             FontSize="16" Padding="10,8"/>
+                    <Button Grid.Column="1" Content="Найти и выдать" 
+                            Click="BtnFindOrder_Click" Padding="20,8"/>
+                </Grid>
+
+                <Border x:Name="OrderInfoPanel" Background="#F3F4F6" CornerRadius="6" 
+                        Padding="15" Margin="0,15,0,0" Visibility="Collapsed">
+                    <StackPanel>
+                        <TextBlock x:Name="TxtOrderInfo" FontSize="14" TextWrapping="Wrap"/>
+                        <Button x:Name="BtnIssue" Content="Подтвердить выдачу" 
+                                Background="#10B981" Margin="0,10,0,0"
+                                HorizontalAlignment="Left" Click="BtnIssue_Click"
+                                Visibility="Collapsed"/>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </Border>
+
+        <!-- форма добавления товара -->
+        <Border Grid.Row="2" Background="White" CornerRadius="8" Padding="20" Margin="0,0,0,20">
+            <StackPanel>
+                <TextBlock Text="Добавить новый товар" FontSize="18" FontWeight="SemiBold" Margin="0,0,0,15"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Text="Название:" Grid.Row="0" Grid.Column="0" Margin="0,0,0,5"/>
+                    <TextBox x:Name="TxtName" Grid.Row="1" Grid.Column="0" Margin="0,0,10,10"/>
+
+                    <TextBlock Text="Описание:" Grid.Row="0" Grid.Column="1" Margin="0,0,0,5"/>
+                    <TextBox x:Name="TxtDesc" Grid.Row="1" Grid.Column="1" Margin="0,0,0,10"/>
+
+                    <TextBlock Text="Цена ($):" Grid.Row="2" Grid.Column="0" Margin="0,0,0,5"/>
+                    <TextBox x:Name="TxtPrice" Grid.Row="3" Grid.Column="0" Margin="0,0,10,10"/>
+
+                    <TextBlock Text="Кол-во на складе:" Grid.Row="2" Grid.Column="1" Margin="0,0,0,5"/>
+                    <TextBox x:Name="TxtStock" Grid.Row="3" Grid.Column="1" Margin="0,0,0,10"/>
+
+                    <TextBlock Text="Категория:" Grid.Row="4" Grid.Column="0" Margin="0,0,0,5"/>
+                    <ComboBox x:Name="CmbCategory" Grid.Row="5" Grid.Column="0" 
+                              Margin="0,0,10,0" FontSize="14" Padding="8,6"/>
+                </Grid>
+                <Button Content="Добавить товар" Click="BtnAdd_Click" 
+                        Margin="0,15,0,0" HorizontalAlignment="Right"/>
+            </StackPanel>
+        </Border>
+
+        <!-- список товаров -->
+        <ScrollViewer Grid.Row="3" VerticalScrollBarVisibility="Auto">
+            <ItemsControl x:Name="AdminProductsList">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border Background="White" CornerRadius="8" Margin="0,5" Padding="15">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Border Width="60" Height="60" Background="#F3F4F6" 
+                                        CornerRadius="6" Margin="0,0,15,0">
+                                    <Grid>
+                                        <TextBlock Text="📦" FontSize="24" 
+                                                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        <Image Source="{Binding ImageFullPath, Mode=OneWay}" 
+                                               Stretch="UniformToFill"/>
+                                    </Grid>
+                                </Border>
+
+                                <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                    <TextBlock Text="{Binding Name, Mode=OneWay}" 
+                                               FontSize="16" FontWeight="SemiBold"/>
+                                    <TextBlock Foreground="Gray">
+                                        <Run Text="{Binding PriceText, Mode=OneWay}"/>
+                                        <Run Text="  |  Остаток: "/>
+                                        <Run Text="{Binding Stock, Mode=OneWay}"/>
+                                        <Run Text="  |  "/>
+                                        <Run Text="{Binding CategoryName, Mode=OneWay, TargetNullValue='—'}"/>
+                                        <Run Text="  |  🏪 "/>
+                                        <Run Text="{Binding ShopName, Mode=OneWay, TargetNullValue='(без магазина)'}"/>
+                                    </TextBlock>
+                                </StackPanel>
+
+                                <Button Grid.Column="2" Content="✏ Редактировать" 
+                                        Background="#2563EB" Margin="0,0,10,0"
+                                        Click="BtnEdit_Click" Tag="{Binding Id, Mode=OneWay}"/>
+
+                                <Button Grid.Column="3" Content="Удалить" Background="#EF4444" 
+                                        Click="BtnDelete_Click" Tag="{Binding Id, Mode=OneWay}"/>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+    </Grid>
+</Page>

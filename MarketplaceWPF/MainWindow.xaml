@@ -1,0 +1,33 @@
+﻿<Window x:Class="MarketplaceWPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="TechMarket" Height="700" Width="1000" WindowStartupLocation="CenterScreen"
+        Background="{StaticResource BackgroundBrush}">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Верхняя панель -->
+        <Border x:Name="TopBar" Grid.Row="0" Background="White" Padding="15,10" 
+                BorderBrush="#E5E7EB" BorderThickness="0,0,0,1" Visibility="Collapsed">
+            <Grid>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+                    <Button x:Name="BtnBack" Content="← Назад" Click="BtnBack_Click" 
+                            Background="Transparent" Foreground="{StaticResource PrimaryBrush}"
+                            Padding="10,5" Margin="0,0,15,0"/>
+                    <TextBlock Text="TechMarket" FontSize="18" FontWeight="Bold" 
+                               Foreground="{StaticResource PrimaryBrush}" Margin="0,0,20,0"
+                               VerticalAlignment="Center"/>
+                    <TextBlock x:Name="TxtTopUser" FontSize="14" Foreground="#6B7280" VerticalAlignment="Center"/>
+                </StackPanel>
+                <Button Content="Выйти" Click="BtnLogout_Click" Background="#EF4444"
+                        HorizontalAlignment="Right" VerticalAlignment="Center"/>
+            </Grid>
+        </Border>
+
+        <Frame x:Name="MainFrame" Grid.Row="1" NavigationUIVisibility="Hidden" 
+               Navigated="MainFrame_Navigated"/>
+    </Grid>
+</Window>

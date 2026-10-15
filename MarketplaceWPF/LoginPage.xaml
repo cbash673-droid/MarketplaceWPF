@@ -1,0 +1,36 @@
+﻿<Page x:Class="MarketplaceWPF.LoginPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Background="{StaticResource BackgroundBrush}">
+    <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Border Background="White" CornerRadius="10" Padding="40" Width="400">
+            <Border.Effect>
+                <DropShadowEffect BlurRadius="15" ShadowDepth="2" Opacity="0.1"/>
+            </Border.Effect>
+            <StackPanel>
+                <TextBlock Text="TechMarket" FontSize="28" FontWeight="Bold" Foreground="{StaticResource PrimaryBrush}" HorizontalAlignment="Center" Margin="0,0,0,20"/>
+
+                <TextBlock x:Name="TitleText" Text="Вход в аккаунт" FontSize="20" FontWeight="SemiBold" Margin="0,0,0,20"/>
+
+                <TextBlock Text="Логин" Margin="0,0,0,5" FontWeight="SemiBold"/>
+                <TextBox x:Name="TxtUsername" Margin="0,0,0,15"/>
+
+                <!-- Блок выбора роли при регистрации (виден только в режиме регистрации) -->
+                <StackPanel x:Name="RolePanel" Visibility="Collapsed" Margin="0,0,0,15">
+                    <TextBlock Text="Я регистрируюсь как:" Margin="0,0,0,5" FontWeight="SemiBold"/>
+                    <StackPanel Orientation="Horizontal">
+                        <RadioButton x:Name="RbUser" Content="Покупатель" IsChecked="True" Margin="0,0,20,0"/>
+                        <RadioButton x:Name="RbSeller" Content="Продавец"/>
+                    </StackPanel>
+                </StackPanel>
+
+                <Button x:Name="BtnSubmit" Content="Войти" Click="BtnSubmit_Click" Margin="0,0,0,10"/>
+
+                <TextBlock x:Name="TxtToggle" Text="Нет аккаунта? Зарегистрироваться" Foreground="{StaticResource PrimaryBrush}" 
+                           HorizontalAlignment="Center" Cursor="Hand" MouseLeftButtonDown="TxtToggle_MouseLeftButtonDown"/>
+
+                <TextBlock x:Name="TxtError" Foreground="Red" HorizontalAlignment="Center" Margin="0,10,0,0" Visibility="Collapsed"/>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Page>
